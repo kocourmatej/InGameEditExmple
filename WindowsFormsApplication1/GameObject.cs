@@ -15,6 +15,13 @@ namespace WindowsFormsApplication1
         public Color Color { get; set; }
         public int Id { get; set; }
         public Pen pen;
+        public readonly int startX;
+        public readonly int startY;
+        public int id;
+        public string objectName;
+        public string instanceName;
+        public int speed;
+        public bool active = true;
 
         public GameObject(int x, int y, Color Color)
         {
@@ -23,9 +30,15 @@ namespace WindowsFormsApplication1
             this.Color = Color;
             pen = new Pen(Color, 2);
             Id = Form1.setId();
+            startX = X;
+            startY = Y;
+            id = GameTime.assignID();
+            instanceName = GameTime.assignInstanceName();
+            objectName = Constants.gameObjectName;
+            speed = 1;
         }
 
-        public virtual void drawSelf(int x, int y, PaintEventArgs e)
+        public virtual void drawSelf(int x, int y, PaintEventArgs e, bool debug = false)
         {
             List<Point> verticles = new List<Point>();
             Point point = new Point(x, y);
@@ -36,5 +49,6 @@ namespace WindowsFormsApplication1
             e.Graphics.DrawPolygon(pen, verticles.ToArray());
             e.Graphics.DrawRectangle(pen, new Rectangle(new Point(300, 300), new Size(32,32)));
         }
+
     }
 }
